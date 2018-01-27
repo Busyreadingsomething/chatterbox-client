@@ -26,8 +26,36 @@
   <body>
     <div id="main">
       <h1>chatterbox</h1>
-      <!-- Your HTML goes here! -->
+      <ul id='roomSelect'></ul>
+      <ul id='friendsList'></ul>
+      <form>
+      <label>Room:</label>
+      <input type="text" id = 'message'>
+      <input type = 'submit' value = 'Submit' id = 'send' class = 'submit'>
+      </form>
     </div>
     <div id="chats"></div>
+    <script>
+      // $(document).ready(function() { 
+      //   $('.username').on('click', function () {
+      //     console.log('you clicked me!');
+      //     var name = $(this).val();
+      //     app.handleUsernameClick(name);
+      //   });
+        
+
+      //   $('#send .submit').submit(function () {
+      //     // debugger;
+      //     var text = $('#message').val();
+      //     app.handleSubmit(text);
+      //   });
+
+      //   // $('#send .submit').on('click', function () {
+      //   //   console.log('You clicked me!');
+      //   //   var text = $('#message').val();
+      //   //   app.handleSubmit(text);
+      //   // }); 
+      // });
+    </script>
   </body>
 </html>
