@@ -41,7 +41,6 @@ class App {
     $.ajax({
       url: this.server,
       type: 'GET',
-      data: 'order=-createdAt&limit=3',
       contentType: 'application/json',
       success: function(data) {
         app.messages = data.results;
@@ -56,7 +55,7 @@ class App {
     $('#chats').html('');
   } 
   renderMessage (message) {
-    if(this.roomname === message.roomname) {
+    if (this.roomname === message.roomname) {
       var element = `<p id='${message.roomname}' class='${_.escape(message.username)}'><span class='username'>${_.escape(message.username)}</span>:  ${_.escape(message.text)}</p>`;
       $('#chats').prepend(element);
     }
@@ -91,5 +90,3 @@ $(document).ready(function() {
     app.handleUsernameClick(name);
   });
 });
-
-

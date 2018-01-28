@@ -59,11 +59,12 @@
           app.handleUsernameClick(name);
         });
         
-        $('button').click(function () {
+        $('button').click(function (event) {
           app.fetch();
           app.messages.forEach(function(message) {
             app.renderMessage(message);
           });
+          event.preventDefault();
         });
 
         $('#roomSelect').change(function (event) {
@@ -78,6 +79,7 @@
           var element = `<option>${text}</option>`;
           $('#roomSelect').append(element);
           $('#newRoom').val('');
+          event.preventDefault();
         });
 
         $('#chat').submit(function () {
@@ -85,6 +87,7 @@
           app.handleSubmit(text);
           $('#message').val('');
           console.log(app.handleSubmit.calledOnce);
+          event.preventDefault();
         });
       });
     </script>
