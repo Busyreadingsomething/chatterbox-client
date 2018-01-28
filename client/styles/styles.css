@@ -52,6 +52,10 @@ form {
     margin-bottom: 20px;
 }
 
+#send {
+    cursor: pointer;
+}
+
 form input[type=text] {
     margin-right: 10px;
     width: 70%;

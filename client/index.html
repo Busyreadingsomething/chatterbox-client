@@ -10,14 +10,14 @@
     <script src="bower_components/underscore/underscore.js"></script>
     <script>
       // YOU DO NOT NEED TO EDIT THIS CODE
-      if (!/(&|\?)username=/.test(window.location.search)) {
-        var newSearch = window.location.search;
-        if (newSearch !== '' & newSearch !== '?') {
-          newSearch += '&';
-        }
-        newSearch += 'username=' + (prompt('What is your name?') || 'anonymous');
-        window.location.search = newSearch;
-      }
+      // if (!/(&|\?)username=/.test(window.location.search)) {
+      //   var newSearch = window.location.search;
+      //   if (newSearch !== '' & newSearch !== '?') {
+      //     newSearch += '&';
+      //   }
+      //   newSearch += 'username=' + (prompt('What is your name?') || 'anonymous');
+      //   window.location.search = newSearch;
+      // }
     </script>
     <!-- your scripts -->
     <script src="env/config.js"></script>
@@ -26,36 +26,59 @@
   <body>
     <div id="main">
       <h1>chatterbox</h1>
-      <ul id='roomSelect'></ul>
+      <select id='roomSelect'>
+        <option>lobby</option>
+      </select>
       <ul id='friendsList'></ul>
-      <form>
-      <label>Room:</label>
+      <form id='select'>
+        <input type = 'text' value = '' id = 'newRoom' class = ''>
+        <input type = 'submit' value = 'Create Room' id = 'createRoom'>
+      </form>
+<!--       <select>
+        <option value = ''>Room1</option>
+        <option value = ''>Room2</option>
+      </select> -->
+      <form id = 'chat'>
+      <label>Chat:</label>
       <input type="text" id = 'message'>
       <input type = 'submit' value = 'Submit' id = 'send' class = 'submit'>
       </form>
+      <!-- <a id='send' href='#' class='submit'>Submit</a> -->
     </div>
     <div id="chats"></div>
     <script>
-      // $(document).ready(function() { 
-      //   $('.username').on('click', function () {
-      //     console.log('you clicked me!');
-      //     var name = $(this).val();
-      //     app.handleUsernameClick(name);
-      //   });
-        
+      $(document).ready(function() {
 
-      //   $('#send .submit').submit(function () {
-      //     // debugger;
-      //     var text = $('#message').val();
-      //     app.handleSubmit(text);
-      //   });
+        // setInterval(function () {
+        //   app.fetch();
+        //   app.renderMessage(app.messages[0]);
+        // }, 1000);
+        $(document.body).on('click', '.username', function () {
+          var name = $(this).text();
+          app.handleUsernameClick(name);
+        });
 
-      //   // $('#send .submit').on('click', function () {
-      //   //   console.log('You clicked me!');
-      //   //   var text = $('#message').val();
-      //   //   app.handleSubmit(text);
-      //   // }); 
-      // });
+        $('#roomSelect').change(function (event) {
+          var room = $('#roomSelect option:selected').val();
+          app.roomname = room;
+          $('p').hide('slow');
+          $(`p#${room}`).show();
+        });
+
+        $('#select').submit(function () {
+          var text = $('#newRoom').val();
+          var element = `<option>${text}</option>`;
+          $('#roomSelect').append(element);
+          $('#newRoom').val('');
+        });
+
+        $('#chat').submit(function () {
+          var text = $('#message').val();
+          app.handleSubmit(text);
+          $('#message').val('');
+          console.log(app.handleSubmit.calledOnce);
+        });
+      });
     </script>
   </body>
 </html>

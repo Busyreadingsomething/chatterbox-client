@@ -4,29 +4,18 @@
 class App {
   constructor () {
     this.server = 'http://parse.sfs.hackreactor.com/chatterbox/classes/messages';
+    this.username = 'bunny';
     this.messages = [];
-  }
-  init () {
-    $(document).ready(function() {
-      $('.username').on('click', function () {
-        var name = $(this).val();
-        app.handleUsernameClick(name);
-      });
-      
+    this.roomname = 'lobby';
 
-    //   $('form').submit(function () {
-    //     // debugger;
-    //     console.log('You clicked me!');
-    //     var text = $('#message').val();
-    //     app.handleSubmit(text);
-    //     console.log(app.handleSubmit.calledOnce);
+  }
+  init () {   
+    // $(document).ready(function() {
+    //   $('.username').on('click', function () {
+    //     var name = $(this).val();
+    //     app.handleUsernameClick(name);
     //   });
     // });
-    // $('#send .submit').on('click', function () {
-    //   console.log('You clicked me!');
-    //   var text = $('#message').val();
-    //   app.handleSubmit(text);
-    });
   }
 
   send (message) {
@@ -34,7 +23,7 @@ class App {
     $.ajax({
       url: this.server,
       type: 'POST',
-      data: message,
+      data: JSON.stringify(message),
       contentType: 'application/json',
       success: function (data) {
         console.log('chatterbox: Message sent');
@@ -52,6 +41,8 @@ class App {
     $.ajax({
       url: this.server,
       type: 'GET',
+      data: 'order=-createdAt&limit=10',
+      contentType: 'application/json',
       success: function(data) {
         app.messages = data.results;
       },
@@ -65,27 +56,26 @@ class App {
     $('#chats').html('');
   } 
   renderMessage (message) {
-    //create an html element 
-    //add message to this element
-    //prepend the element to the div with an id of 'chats'
-    
-    // loop through the messages array for each iteration
-    this.messages.forEach(function(message) {
-      var element = `<p><span class='username'>${message.username}</span>${message.text}</p>`;
-      $('#chats').prepend(element);
-    });
+    var element = `<p id='${message.roomname}' class='${_.escape(message.username)}'><span class='username'>${_.escape(message.username)}</span>:  ${_.escape(message.text)}</p>`;
+    $('#chats').append(element);
+    // this.init();
   } 
-  renderRoom (room) {
-    var element = `<li>${room}</li>`;
+  renderRoom (room) {         
     $('#roomSelect').append(element);
   }
   handleUsernameClick (name) {
-    var element = `<li>${name}</li>`;
-    $('#friendsList').append(element);
+    // var element = `<li>${name}</li>`;
+    // $('#friendsList').append(element);
+    $(`.${name}`).css({'font-weight': 'bold'});
   }
 
   handleSubmit (text) {
-    //
+    let message = {
+      username: this.username,
+      text: text,
+      roomname: this.roomname
+    };
+    this.send(message);
   }
 
 }
@@ -97,13 +87,6 @@ $(document).ready(function() {
     console.log('You clicked me!');
     var name = $(this).val();
     app.handleUsernameClick(name);
-  });
-  
-
-  $('form').submit(function () {
-    // debugger;
-    var text = $('#message').val();
-    app.handleSubmit(text);
   });
 });
 
