@@ -41,7 +41,7 @@ class App {
     $.ajax({
       url: this.server,
       type: 'GET',
-      data: 'order=-createdAt&limit=10',
+      data: 'order=-createdAt&limit=3',
       contentType: 'application/json',
       success: function(data) {
         app.messages = data.results;
@@ -56,8 +56,10 @@ class App {
     $('#chats').html('');
   } 
   renderMessage (message) {
-    var element = `<p id='${message.roomname}' class='${_.escape(message.username)}'><span class='username'>${_.escape(message.username)}</span>:  ${_.escape(message.text)}</p>`;
-    $('#chats').append(element);
+    if(this.roomname === message.roomname) {
+      var element = `<p id='${message.roomname}' class='${_.escape(message.username)}'><span class='username'>${_.escape(message.username)}</span>:  ${_.escape(message.text)}</p>`;
+      $('#chats').prepend(element);
+    }
     // this.init();
   } 
   renderRoom (room) {         
